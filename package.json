@@ -1,0 +1,26 @@
+{
+    "name": "backend_tienda_de_dulces",
+    "version": "0.0.1",
+    "description": "Tienda de Dulces",
+    "main": "index.js",
+    "scripts": {
+        "comentario": "test: echo Error: no test specified && exit 1 => Cambiamos la línea anterior para establecer el inicio de nodemos así:",
+        "start": "nodemon"
+    },
+    "keywords": [
+        "tienda",
+        "virtual",
+        "nodejs",
+        "backend"
+    ],
+    "author": "Misión TIC 2022 U31 grupo 03",
+    "license": "MIT",
+    "dependencies": {
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "mongoose": "^6.7.0"
+    },
+    "devDependencies": {
+        "nodemon": "2.0.20"
+    }
+}
