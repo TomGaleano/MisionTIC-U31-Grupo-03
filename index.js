@@ -5,22 +5,24 @@ require('dotenv').config({path: './var.env'})
 const conectarDB = require('./config/cxn_db');
 var app = express();
 app.use(router);
+conectarDB();
+const controlProveedor = require('./controllers/controlProveedor');
+router.get('/apirest/', controlProveedor.leer);
 
 router.get('/mensaje', function(req, res){
-    res.send('Mensaje con Método GET')
-    conectarDB();
+    res.send('Mensaje con Método GET');
 });
 
 router.post('/mensaje', function(req, res){
-    res.send('Mensaje con Método POST')
+    res.send('Mensaje con Método POST');
 });
 
-router.put('mensaje', function(req, res){
-    res.send('Mensaje con Método PUT')
+router.put('/mensaje', function(req, res){
+    res.send('Mensaje con Método PUT');
 });
 
 router.delete('/mensaje', function(req, res){
-    res.send('Mensaje con Método DELETE')
+    res.send('Mensaje con Método DELETE');
 })
 
 
