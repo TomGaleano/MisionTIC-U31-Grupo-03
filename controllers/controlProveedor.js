@@ -2,13 +2,7 @@ const modelProveedor = require('../models/modelProveedor');
 exports.crear = async (req, res) => {
     try {
         let proveedor;
-        proveedor = new modelProveedor({
-            id_proveedor : 13,
-            nombre_proveedor : "UIS",
-            telefono_proveedor : 3213232032,
-            direccion_proveedor : "Calle 0 #0-0",
-            ciudad_proveedor : "Bucaramanga"
-        });
+        proveedor = new modelProveedor(req.body);
         await proveedor.save();
         res.send(proveedor);
     } catch (error) {
@@ -19,13 +13,15 @@ exports.crear = async (req, res) => {
 
 exports.actualizar = async (req, res) =>{
     try {
-        const proveedor = await modelProveedor.findById(req.params.id_prov);
+        const proveedor = await modelProveedor.findById(req.params.id);
+        console.log("proveedor = "+ proveedor);
         if (!proveedor){
             res.status(404).json({mensaje: "El proveedor no existe"});
         }
         else {
-            //await modelProveedor.findByIdAndUpdate({_id: req.params.id_prov}, req.body);
-            await modelProveedor.findByIdAndUpdate({_id: req.params.id_prov}, { nombre_prov:"UIS MisiónTIC 2022"});
+            console.log("req.body : " + req.body);
+            await modelProveedor.findByIdAndUpdate({_id: req.params.id}, req.body);
+            //await modelProveedor.findByIdAndUpdate({_id: req.params.id}, { nombre_prov:"UIS MisiónTIC 2022"});
             res.json({mensaje: 'El proveedor fue actualizado correctamente.'})
         }
     } catch (error) {
@@ -46,7 +42,7 @@ exports.leer = async (req, res) => {
 
 exports.eliminar = async (req, res) => {
     try {
-        const proveedor = await modelProveedor.findById(req.params.id_prov);
+        const proveedor = await modelProveedor.findById(req.params.id);
         if (!proveedor){
             res.status(404).json({mensaje: 'El proveedor no existe'})
         }

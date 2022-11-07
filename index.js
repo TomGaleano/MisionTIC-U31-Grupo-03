@@ -3,11 +3,23 @@ const express = require('express');
 const router = express.Router();
 require('dotenv').config({path: './var.env'})
 const conectarDB = require('./config/cxn_db');
+const cors = require('cors');
 var app = express();
 app.use(router);
 conectarDB();
 const controlProveedor = require('./controllers/controlProveedor');
-router.get('/apirest/', controlProveedor.leer);
+
+router.post('/apirest/proveedor/', controlProveedor.crear);
+router.get('/apirest/proveedor/', controlProveedor.leer);
+router.put('/apirest/proveedor/:id', controlProveedor.actualizar);
+router.delete('/apirest/proveedor/:id', controlProveedor.eliminar);
+
+const controlProducto = require('./controllers/controlProducto');
+
+router.post('/apirest/producto/', controlProducto.crear);
+router.get('/apirest/producto/', controlProducto.leer);
+router.put('/apirest/producto/:id', controlProducto.actualizar);
+router.delete('/apirest/producto/:id', controlProducto.eliminar);
 
 router.get('/mensaje', function(req, res){
     res.send('Mensaje con Método GET');

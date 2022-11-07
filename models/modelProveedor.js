@@ -5,5 +5,8 @@ const proveedorSchema = mongoose.Schema({
     telefono_proveedor : Number,
     direccion_proveedor : String,
     ciudad_proveedor : String,
+},
+{
+    versionKey : false
 });
 module.exports = mongoose.model('proveedor', proveedorSchema);
