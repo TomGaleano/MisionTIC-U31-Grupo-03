@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 require('dotenv').config({path: './var.env'})
 const conectarDB = require('./config/cxn_db');
-const cors = require('cors');
 var app = express();
+app.use(express.json());
 app.use(router);
 conectarDB();
 const controlProveedor = require('./controllers/controlProveedor');
@@ -18,6 +18,7 @@ const controlProducto = require('./controllers/controlProducto');
 
 router.post('/apirest/producto/', controlProducto.crear);
 router.get('/apirest/producto/', controlProducto.leer);
+router.get('/apirest/producto/:id', controlProducto.leerPorId);
 router.put('/apirest/producto/:id', controlProducto.actualizar);
 router.delete('/apirest/producto/:id', controlProducto.eliminar);
 

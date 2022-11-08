@@ -2,7 +2,9 @@ const modelProveedor = require('../models/modelProveedor');
 exports.crear = async (req, res) => {
     try {
         let proveedor;
+        console.log("req.body = " + req.body);
         proveedor = new modelProveedor(req.body);
+        console.log("proveedor = " + proveedor);
         await proveedor.save();
         res.send(proveedor);
     } catch (error) {
@@ -13,6 +15,7 @@ exports.crear = async (req, res) => {
 
 exports.actualizar = async (req, res) =>{
     try {
+        console.log("req.body : " + req.body);
         const proveedor = await modelProveedor.findById(req.params.id);
         console.log("proveedor = "+ proveedor);
         if (!proveedor){
@@ -21,7 +24,6 @@ exports.actualizar = async (req, res) =>{
         else {
             console.log("req.body : " + req.body);
             await modelProveedor.findByIdAndUpdate({_id: req.params.id}, req.body);
-            //await modelProveedor.findByIdAndUpdate({_id: req.params.id}, { nombre_prov:"UIS MisiónTIC 2022"});
             res.json({mensaje: 'El proveedor fue actualizado correctamente.'})
         }
     } catch (error) {
