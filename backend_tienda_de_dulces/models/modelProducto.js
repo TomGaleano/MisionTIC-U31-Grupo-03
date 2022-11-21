@@ -6,7 +6,8 @@ const productoSchema = mongoose.Schema({
     cantidad_inventario_producto : Number,
     categoria_producto : String,
     precio_producto : Number,
-    id_proveedor : [mongoose.Types.ObjectId]
+    id_proveedor : [mongoose.Types.ObjectId],
+    img_producto : String
 },
 {
     versionKey : false

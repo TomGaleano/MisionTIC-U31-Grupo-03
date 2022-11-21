@@ -1,26 +1,40 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-require('dotenv').config({path: './var.env'})
-const conectarDB = require('./config/cxn_db');
 var app = express();
 app.use(express.json());
+const cors = require('cors');
+app.use(cors());
+var whitelist = ['http://localhost:4000/apirest/', 'http://localhost:4200/apirest/']
+var corsOptionsDelegate = function (req, callback) {
+    var corsOptions;
+    if (whitelist.indexOf(req.header('Origin')) !== -1) {
+        corsOptions = {Origin: true }
+    }else{
+        corsOptions = {Origin: false }
+    }
+    callback(null, corsOptions)
+}
+
+require('dotenv').config({path: './var.env'})
+const conectarDB = require('./config/cxn_db');
 app.use(router);
 conectarDB();
+app.use(express.static('./public'));
 const controlProveedor = require('./controllers/controlProveedor');
 
-router.post('/apirest/proveedor/', controlProveedor.crear);
-router.get('/apirest/proveedor/', controlProveedor.leer);
-router.put('/apirest/proveedor/:id', controlProveedor.actualizar);
-router.delete('/apirest/proveedor/:id', controlProveedor.eliminar);
+router.post('/apirest/proveedor/', cors(corsOptionsDelegate), controlProveedor.crear);
+router.get('/apirest/proveedor/', cors(corsOptionsDelegate), controlProveedor.leer);
+router.put('/apirest/proveedor/:id', cors(corsOptionsDelegate), controlProveedor.actualizar);
+router.delete('/apirest/proveedor/:id', cors(corsOptionsDelegate), controlProveedor.eliminar);
 
 const controlProducto = require('./controllers/controlProducto');
 
-router.post('/apirest/producto/', controlProducto.crear);
-router.get('/apirest/producto/', controlProducto.leer);
-router.get('/apirest/producto/:id', controlProducto.leerPorId);
-router.put('/apirest/producto/:id', controlProducto.actualizar);
-router.delete('/apirest/producto/:id', controlProducto.eliminar);
+router.post('/apirest/producto/', cors(corsOptionsDelegate), controlProducto.crear);
+router.get('/apirest/producto/', cors(corsOptionsDelegate), controlProducto.leer);
+router.get('/apirest/producto/:id', cors(corsOptionsDelegate), controlProducto.leerPorId);
+router.put('/apirest/producto/:id', cors(corsOptionsDelegate), controlProducto.actualizar);
+router.delete('/apirest/producto/:id', cors(corsOptionsDelegate), controlProducto.eliminar);
 
 router.get('/mensaje', function(req, res){
     res.send('Mensaje con Método GET');
